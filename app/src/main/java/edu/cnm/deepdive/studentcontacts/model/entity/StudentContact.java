@@ -9,9 +9,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(
     indices = {
-        @Index(
-            value = "relationship_type"
-        )
+        @Index(value = {"student_id", "contact_id"}, unique = true)
     },
     foreignKeys = {
         @ForeignKey(
@@ -32,21 +30,61 @@ public class StudentContact {
 
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "student_contact_id")
-  private Long studentContactId;
+  private long studentContactId;
 
-  @NonNull
-  @ColumnInfo(name = "student_id")
-  private Student studentId;
+  @ColumnInfo(name = "student_id", index = true)
+  private long studentId;
 
-  @NonNull
-  @ColumnInfo(name = "contact_id")
-  private Contact contactId;
+  @ColumnInfo(name = "contact_id", index = true)
+  private long contactId;
 
   private boolean primary;
 
   @NonNull
   @ColumnInfo(name = "relationship_type", index = true)
-  private Relationship relationshipType;
+  private Relationship relationshipType = Relationship.OTHER;
+
+  public long getStudentContactId() {
+    return studentContactId;
+  }
+
+  public void setStudentContactId(long studentContactId) {
+    this.studentContactId = studentContactId;
+  }
+
+  public long getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(long studentId) {
+    this.studentId = studentId;
+  }
+
+  public long getContactId() {
+    return contactId;
+  }
+
+  public void setContactId(long contactId) {
+    this.contactId = contactId;
+  }
+
+  public boolean isPrimary() {
+    return primary;
+  }
+
+  public void setPrimary(boolean primary) {
+    this.primary = primary;
+  }
+
+  @NonNull
+  public Relationship getRelationshipType() {
+    return relationshipType;
+  }
+
+  public void setRelationshipType(
+      @NonNull Relationship relationshipType) {
+    this.relationshipType = relationshipType;
+  }
 
   public enum Relationship {
     PARENT, GUARDIAN, SIBLING, OTHER

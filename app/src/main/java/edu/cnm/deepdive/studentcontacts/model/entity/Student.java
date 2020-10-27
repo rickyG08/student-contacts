@@ -8,18 +8,17 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDate;
 
 @SuppressWarnings("NotNullFieldNotInitialized")
-@Entity(indices = {
-    @Index(value = {
-        "last_name", "first_name", "middle_name"
-    }, unique = true),
-    @Index(value = "enrolled"),
-    @Index(value = "disenrolled")
-})
+@Entity(
+    indices = {
+        @Index(value = {"last_name", "first_name", "middle_name"}, unique = true),
+        @Index(value = {"student_number"}, unique = true)
+    }
+)
 public class Student {
 
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "student_id")
-  private Long studentId;
+  private long studentId;
 
   @NonNull
   @ColumnInfo(name = "student_number")
@@ -40,13 +39,14 @@ public class Student {
   @ColumnInfo(index = true)
   private LocalDate enrolled;
 
+  @ColumnInfo(index = true)
   private LocalDate disenrolled;
 
-  public Long getStudentId() {
+  public long getStudentId() {
     return studentId;
   }
 
-  public void setStudentId(Long studentId) {
+  public void setStudentId(long studentId) {
     this.studentId = studentId;
   }
 
